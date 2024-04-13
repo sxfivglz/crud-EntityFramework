@@ -1,0 +1,30 @@
+﻿@model PracticaUno.Models.Inventories
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Inventories</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.warehouse_id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.warehouse_id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.product_id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

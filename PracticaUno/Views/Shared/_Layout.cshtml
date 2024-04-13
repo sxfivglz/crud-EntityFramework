@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PracticaUno</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="~/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/adminlte/dist/css/adminlte.min.css">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PracticaUno.styles.css" asp-append-version="true" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Left navbar links<div class="content-wrapper pl-1 pr-1"> -->
+
+    <partial name="_Navbar" />
+    <partial name="_Sidebar" />
+    <div class="content-wrapper">
+        <div class="container-fluid bg-gradient">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+          </div>
+
+        <partial name="_Footer" />
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+        <script src="~/adminlte/plugins/jquery/jquery.min.js"></script>
+
+        <script src="~/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/adminlte/dist/js/adminlte.min.js"></script>
+        <script src="~/adminlte/plugins/jquery/jquery.min.js"></script>
+        <script src="~/adminlte/plugins/chart.js/Chart.min.js"></script>
+        <script src="~/adminlte/dist/js/pages/dashboard3.js"></script>
+       
+        @await RenderSectionAsync("Scripts", required: false)
+  
+</body>
+</html>
+

@@ -1,0 +1,42 @@
+﻿@model PracticaUno.Models.Customers
+
+@{
+    ViewData["Title"] = "Details";
+}
+<br />
+<h1 class="text-center">Customers details</h1>
+
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2 ">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Website)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Website)
+        </dd>
+        <dt class = "col-sm-2">
+            Credit Limit
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Credit_limit)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.customer_id" class="btn btn-outline-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+</div>
