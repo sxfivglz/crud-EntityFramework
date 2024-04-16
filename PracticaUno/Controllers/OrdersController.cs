@@ -20,11 +20,17 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
-        {
+        //public async Task<IActionResult> Index()
+        //{
            
-            var applicationDbContext = _context.orders.Include(o => o.Customers).Include(x => x.Employees);
-            return View(await applicationDbContext.ToListAsync());
+        //    var applicationDbContext = _context.orders.Include(o => o.Customers).Include(x => x.Employees);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+        public async Task<IActionResult> Index(int? pageNumber)
+        {
+            int pageSize = 10;
+            var orders = _context.orders.Include(o => o.Customers).Include(x => x.Employees).AsQueryable();
+            return View(await Pagination<Orders>.CreateAsync(orders, pageNumber ?? 1, pageSize));
         }
 
         // GET: Orders/Details/5
@@ -37,7 +43,9 @@ namespace PracticaUno.Controllers
 
             var orders = await _context.orders
                 .Include(o => o.Employees)
+                .Include(o => o.Customers)
                 .FirstOrDefaultAsync(m => m.order_id == id);
+
             if (orders == null)
             {
                 return NotFound();
@@ -49,7 +57,8 @@ namespace PracticaUno.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "employee_id");
+            ViewData["customer_id"] = new SelectList(_context.customers, "customer_id", "Name");
+            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "first_name");
             return View();
         }
 
@@ -66,7 +75,7 @@ namespace PracticaUno.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "employee_id", orders.salesman_id);
+            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "first_name", orders.salesman_id);
             return View(orders);
         }
 
@@ -78,14 +87,23 @@ namespace PracticaUno.Controllers
                 return NotFound();
             }
 
-            var orders = await _context.orders.FindAsync(id);
+            var orders = await _context.orders
+                .Include(o => o.Employees)
+                .FirstOrDefaultAsync(m => m.order_id == id);
+
             if (orders == null)
             {
                 return NotFound();
             }
-            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "employee_id", orders.salesman_id);
+
+            // Obtener la lista de clientes disponibles
+            ViewData["customer_id"] = new SelectList(_context.customers, "customer_id", "Name", orders.customer_id);
+            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "first_name", orders.salesman_id);
+
             return View(orders);
         }
+
+
 
         // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -119,7 +137,7 @@ namespace PracticaUno.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "employee_id", orders.salesman_id);
+            ViewData["salesman_id"] = new SelectList(_context.employees, "employee_id", "first_name", orders.salesman_id);
             return View(orders);
         }
 
@@ -133,7 +151,9 @@ namespace PracticaUno.Controllers
 
             var orders = await _context.orders
                 .Include(o => o.Employees)
+                .Include(o => o.Customers)
                 .FirstOrDefaultAsync(m => m.order_id == id);
+
             if (orders == null)
             {
                 return NotFound();
@@ -141,7 +161,6 @@ namespace PracticaUno.Controllers
 
             return View(orders);
         }
-
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

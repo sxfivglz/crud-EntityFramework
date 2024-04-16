@@ -3,22 +3,20 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Contacts</h4>
+<br />
+<h2 class="text-center">Create new contact</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="First_name" class="control-label"></label>
+                <label asp-for="First_name" class="control-label">First name</label>
                 <input asp-for="First_name" class="form-control" />
                 <span asp-validation-for="First_name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Last_name" class="control-label"></label>
+                <label asp-for="Last_name" class="control-label">Last name</label>
                 <input asp-for="Last_name" class="form-control" />
                 <span asp-validation-for="Last_name" class="text-danger"></span>
             </div>
@@ -33,7 +31,7 @@
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="customer_id" class="control-label"></label>
+                <label asp-for="customer_id" class="control-label">Customer</label>
                 <select asp-for="customer_id" class ="form-control" asp-items="ViewBag.customer_id"></select>
             </div>
             <div class="form-group">
@@ -44,7 +42,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+
 </div>
 
 @section Scripts {

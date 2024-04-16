@@ -20,7 +20,11 @@ namespace PracticaUno.Models
         public string? state { get; set; }
         [JsonPropertyName("country_id")]
         [ForeignKey("Countries")]
-        public char? country_id { get; set; }
+        public string? country_id { get; set; }
+
+        public Countries? Countries { get; set; }
+
+
 
     }
 }

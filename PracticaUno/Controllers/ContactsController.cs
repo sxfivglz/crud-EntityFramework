@@ -20,10 +20,16 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Contacts
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.contacts.Include(c => c.Customers);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var applicationDbContext = _context.contacts.Include(c => c.Customers);
-            return View(await applicationDbContext.ToListAsync());
+            int pageSize = 10;
+            var contacts = _context.contacts.Include(c => c.Customers).AsQueryable();
+            return View(await Pagination<Contacts>.CreateAsync(contacts, pageNumber ?? 1, pageSize));
         }
 
         // GET: Contacts/Details/5
@@ -48,7 +54,7 @@ namespace PracticaUno.Controllers
         // GET: Contacts/Create
         public IActionResult Create()
         {
-            ViewData["customer_id"] = new SelectList(_context.customers, "customer_id", "customer_id");
+            ViewData["customer_id"] = new SelectList(_context.customers, "customer_id","Name");
             return View();
         }
 
@@ -82,7 +88,7 @@ namespace PracticaUno.Controllers
             {
                 return NotFound();
             }
-            ViewData["customer_id"] = new SelectList(_context.customers, "customer_id", "customer_id", contacts.customer_id);
+            ViewData["customer_id"] = new SelectList(_context.customers, "customer_id", "Name", contacts.customer_id);
             return View(contacts);
         }
 

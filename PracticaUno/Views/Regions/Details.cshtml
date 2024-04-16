@@ -3,15 +3,15 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
+<br />
+<h2 class="text-center">Region details</h2>
 
 <div>
     <h4>Regions</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.region_name)
+            Region name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.region_name)
@@ -19,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.region_id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.region_id" class="btn btn-outline-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>

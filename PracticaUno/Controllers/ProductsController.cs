@@ -20,10 +20,16 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.products.Include(p => p.Product_Categories);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var applicationDbContext = _context.products.Include(p => p.Product_Categories);
-            return View(await applicationDbContext.ToListAsync());
+            int pageSize = 10;
+            var products = _context.products.Include(p => p.Product_Categories).AsQueryable();
+            return View(await Pagination<Products>.CreateAsync(products, pageNumber ?? 1, pageSize));
         }
 
         // GET: Products/Details/5
@@ -48,7 +54,7 @@ namespace PracticaUno.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_id");
+            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_name");
             return View();
         }
 
@@ -57,16 +63,18 @@ namespace PracticaUno.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("product_id,Product_name,Description,Standard_cost,List_price,category_id")] Products products)
+        public async Task<IActionResult> Create(Products product)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(products);
+                // Guardar el nuevo producto en la base de datos
+                _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_id", products.category_id);
-            return View(products);
+            // Si hay errores de validación, volver a mostrar el formulario con los errores
+            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_name", product.category_id);
+            return View(product);
         }
 
         // GET: Products/Edit/5
@@ -77,12 +85,15 @@ namespace PracticaUno.Controllers
                 return NotFound();
             }
 
-            var products = await _context.products.FindAsync(id);
+            var products = await _context.products
+                .Include(p => p.Product_Categories)
+                .FirstOrDefaultAsync(m => m.product_id == id);
+
             if (products == null)
             {
                 return NotFound();
             }
-            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_id", products.category_id);
+            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_name", products.category_id);
             return View(products);
         }
 
@@ -118,7 +129,7 @@ namespace PracticaUno.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_id", products.category_id);
+            ViewData["category_id"] = new SelectList(_context.product_categories, "category_id", "category_name", products.category_id);
             return View(products);
         }
 

@@ -8,7 +8,7 @@ namespace PracticaUno.Models
     {
         [Key]
         
-        public char country_id { get; set; }
+        public string? country_id { get; set; }
         public string country_name { get; set; }
         [ForeignKey("Regions")]
         public int? region_id { get; set; }

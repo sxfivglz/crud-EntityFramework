@@ -3,21 +3,21 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
+<br />
+<h2 class="text-center">Inventory details</h2>
 
 <div>
-    <h4>Inventories</h4>
+
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.warehouse_id)
+            Warehouse
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.warehouse_id)
+            @Html.DisplayFor(model => model.Warehouses.warehouse_name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.quantity)
+            Quantity
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.quantity)
@@ -25,6 +25,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.product_id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.product_id" class="btn btn-outline-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>

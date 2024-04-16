@@ -20,10 +20,13 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.customers.ToListAsync());
+            int pageSize = 10;
+            var customers = _context.customers.AsQueryable();
+            return View(await Pagination<Customers>.CreateAsync(customers, pageNumber ?? 1, pageSize));
         }
+
 
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)

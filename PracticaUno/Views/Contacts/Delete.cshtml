@@ -12,13 +12,13 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.First_name)
+            First name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.First_name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Last_name)
+            Last name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Last_name)
@@ -39,13 +39,14 @@
             @Html.DisplayNameFor(model => model.Customers)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customers.customer_id)
+            @Html.DisplayFor(model => model.Customers.Name)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="contact_id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+
     </form>
 </div>

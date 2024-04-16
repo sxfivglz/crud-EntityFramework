@@ -20,10 +20,13 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Warehouses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var applicationDbContext = _context.warehouses.Include(w => w.Locations);
-            return View(await applicationDbContext.ToListAsync());
+            int pageSize = 10;
+            var warehouses = _context.warehouses.Include(w => w.Locations).AsQueryable();
+            return View(await Pagination<Warehouses>.CreateAsync(warehouses, pageNumber ?? 1, pageSize));
+            //var applicationDbContext = _context.warehouses.Include(w => w.Locations);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Warehouses/Details/5
@@ -48,7 +51,7 @@ namespace PracticaUno.Controllers
         // GET: Warehouses/Create
         public IActionResult Create()
         {
-            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "location_id");
+            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "address");
             return View();
         }
 
@@ -65,7 +68,7 @@ namespace PracticaUno.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "location_id", warehouses.location_id);
+            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "address", warehouses.location_id);
             return View(warehouses);
         }
 
@@ -82,7 +85,7 @@ namespace PracticaUno.Controllers
             {
                 return NotFound();
             }
-            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "location_id", warehouses.location_id);
+            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "address", warehouses.location_id);
             return View(warehouses);
         }
 
@@ -118,7 +121,7 @@ namespace PracticaUno.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "location_id", warehouses.location_id);
+            ViewData["location_id"] = new SelectList(_context.locations, "location_id", "address", warehouses.location_id);
             return View(warehouses);
         }
 

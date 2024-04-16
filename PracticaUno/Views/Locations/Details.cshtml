@@ -4,45 +4,45 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
+<br />
+<h2 class="text-center">Location details</h2>
 <div>
-    <h4>Locations</h4>
+  
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.address)
+            Address
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.address)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.postal_code)
+            Postal code
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.postal_code)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.city)
+           City
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.city)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.state)
+          State
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.state)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.country_id)
+          Country
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.country_id)
+            @Html.DisplayFor(model => model.Countries.country_name)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.location_id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.location_id" class="btn btn-outline-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>

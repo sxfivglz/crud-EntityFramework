@@ -20,9 +20,12 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Product_categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.product_categories.ToListAsync());
+            int pageSize = 10;
+            var product_categories = _context.product_categories.AsQueryable();
+            return View(await Pagination<Product_categories>.CreateAsync(product_categories, pageNumber ?? 1, pageSize));
+            //return View(await _context.product_categories.ToListAsync());
         }
 
         // GET: Product_categories/Details/5

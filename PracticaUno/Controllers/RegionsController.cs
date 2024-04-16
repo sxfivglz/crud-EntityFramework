@@ -20,9 +20,11 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Regions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.regions.ToListAsync());
+            int pageSize = 10;
+            var regions = _context.regions.AsQueryable();
+            return View(await Pagination<Regions>.CreateAsync(regions, pageNumber ?? 1, pageSize));
         }
 
         // GET: Regions/Details/5

@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Countries</h4>
+<br />
+<h2 class="text-center">Edit country</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,14 +13,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="country_id" />
             <div class="form-group">
-                <label asp-for="country_name" class="control-label"></label>
+                <label asp-for="country_name" class="control-label">Country name</label>
                 <input asp-for="country_name" class="form-control" />
                 <span asp-validation-for="country_name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="region_id" class="control-label"></label>
-                <input asp-for="region_id" class="form-control" />
-                <span asp-validation-for="region_id" class="text-danger"></span>
+                <label asp-for="region_id" class="control-label">Region</label>
+                <select asp-for="region_id" class="form-control" asp-items="ViewBag.region_id"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

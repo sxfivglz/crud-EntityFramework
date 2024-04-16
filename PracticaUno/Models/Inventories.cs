@@ -15,7 +15,7 @@ namespace PracticaUno.Models
         public int warehouse_id { get; set;}
         [JsonPropertyName("quantity")]
         public int quantity { get; set; }
-
+        public Warehouses? Warehouses { get; set; }
 
     }
 }

@@ -20,9 +20,12 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Locations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.locations.ToListAsync());
+            int pageSize = 10;
+            var locations = _context.locations.Include(l => l.Countries).AsQueryable();
+            return View(await Pagination<Locations>.CreateAsync(locations, pageNumber ?? 1, pageSize));
+            
         }
 
         // GET: Locations/Details/5
@@ -34,6 +37,7 @@ namespace PracticaUno.Controllers
             }
 
             var locations = await _context.locations
+                .Include(l => l.Countries)
                 .FirstOrDefaultAsync(m => m.location_id == id);
             if (locations == null)
             {
@@ -46,6 +50,7 @@ namespace PracticaUno.Controllers
         // GET: Locations/Create
         public IActionResult Create()
         {
+            ViewData["country_id"] = new SelectList(_context.countries, "country_id", "country_name");
             return View();
         }
 
@@ -62,6 +67,7 @@ namespace PracticaUno.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["country_id"] = new SelectList(_context.countries, "country_id", "country_name", locations.country_id);
             return View(locations);
         }
 
@@ -78,6 +84,7 @@ namespace PracticaUno.Controllers
             {
                 return NotFound();
             }
+            ViewData["country_id"] = new SelectList(_context.countries, "country_id", "country_name", locations.country_id);
             return View(locations);
         }
 
@@ -113,6 +120,7 @@ namespace PracticaUno.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["country_id"] = new SelectList(_context.countries, "country_id", "country_name", locations.country_id);
             return View(locations);
         }
 
@@ -125,6 +133,7 @@ namespace PracticaUno.Controllers
             }
 
             var locations = await _context.locations
+                .Include(l => l.Countries)
                 .FirstOrDefaultAsync(m => m.location_id == id);
             if (locations == null)
             {

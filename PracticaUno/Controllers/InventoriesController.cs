@@ -20,9 +20,12 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Inventories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.inventories.ToListAsync());
+            int pageSize = 10;
+            var inventories = _context.inventories.Include(w => w.Warehouses).AsQueryable();
+            return View(await Pagination<Inventories>.CreateAsync(inventories, pageNumber ?? 1, pageSize));
+        
         }
 
         // GET: Inventories/Details/5
@@ -34,6 +37,7 @@ namespace PracticaUno.Controllers
             }
 
             var inventories = await _context.inventories
+                .Include(w => w.Warehouses)
                 .FirstOrDefaultAsync(m => m.product_id == id);
             if (inventories == null)
             {
@@ -46,6 +50,7 @@ namespace PracticaUno.Controllers
         // GET: Inventories/Create
         public IActionResult Create()
         {
+            ViewData["warehouse_id"] = new SelectList(_context.warehouses, "warehouse_id", "warehouse_name");
             return View();
         }
 
@@ -62,6 +67,7 @@ namespace PracticaUno.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["warehouse_id"] = new SelectList(_context.warehouses, "warehouse_id", "warehouse_name", inventories.warehouse_id);
             return View(inventories);
         }
 
@@ -73,11 +79,15 @@ namespace PracticaUno.Controllers
                 return NotFound();
             }
 
-            var inventories = await _context.inventories.FindAsync(id);
+            var inventories = await _context.inventories
+                .Include(w => w.Warehouses)
+                .FirstOrDefaultAsync(m => m.product_id == id);
+                //.FindAsync(id);
             if (inventories == null)
             {
                 return NotFound();
             }
+            ViewData["warehouse_id"] = new SelectList(_context.warehouses, "warehouse_id", "warehouse_name", inventories.warehouse_id);
             return View(inventories);
         }
 
@@ -113,6 +123,7 @@ namespace PracticaUno.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["warehouse_id"] = new SelectList(_context.warehouses, "warehouse_id", "warehouse_name", inventories.warehouse_id);
             return View(inventories);
         }
 
@@ -125,6 +136,7 @@ namespace PracticaUno.Controllers
             }
 
             var inventories = await _context.inventories
+                .Include(w => w.Warehouses)
                 .FirstOrDefaultAsync(m => m.product_id == id);
             if (inventories == null)
             {

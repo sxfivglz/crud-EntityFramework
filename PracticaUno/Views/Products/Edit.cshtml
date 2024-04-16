@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<br />
+<h2 class="text-center">Edit product</h2>
 
-<h4>Products</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="product_id" />
             <div class="form-group">
-                <label asp-for="Product_name" class="control-label"></label>
+                <label asp-for="Product_name" class="control-label">Product name</label>
                 <input asp-for="Product_name" class="form-control" />
                 <span asp-validation-for="Product_name" class="text-danger"></span>
             </div>
@@ -24,17 +24,17 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Standard_cost" class="control-label"></label>
+                <label asp-for="Standard_cost" class="control-label">Standard cost</label>
                 <input asp-for="Standard_cost" class="form-control" />
                 <span asp-validation-for="Standard_cost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="List_price" class="control-label"></label>
+                <label asp-for="List_price" class="control-label">List price</label>
                 <input asp-for="List_price" class="form-control" />
                 <span asp-validation-for="List_price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="category_id" class="control-label"></label>
+                <label asp-for="category_id" class="control-label">Category</label>
                 <select asp-for="category_id" class="form-control" asp-items="ViewBag.category_id"></select>
                 <span asp-validation-for="category_id" class="text-danger"></span>
             </div>
@@ -46,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>
 
 @section Scripts {

@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Locations</h4>
+<br />
+<h2 class="text-center">Edit location</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,28 +13,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="location_id" />
             <div class="form-group">
-                <label asp-for="address" class="control-label"></label>
+                <label asp-for="address" class="control-label">Address</label>
                 <input asp-for="address" class="form-control" />
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="postal_code" class="control-label"></label>
+                <label asp-for="postal_code" class="control-label">Postal code</label>
                 <input asp-for="postal_code" class="form-control" />
                 <span asp-validation-for="postal_code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="city" class="control-label"></label>
+                <label asp-for="city" class="control-label">City</label>
                 <input asp-for="city" class="form-control" />
                 <span asp-validation-for="city" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="state" class="control-label"></label>
+                <label asp-for="state" class="control-label">State</label>
                 <input asp-for="state" class="form-control" />
                 <span asp-validation-for="state" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="country_id" class="control-label"></label>
-                <input asp-for="country_id" class="form-control" />
+                <label asp-for="country_id" class="control-label">Country</label>
+                <select asp-for="country_id" class="form-control" asp-items="ViewBag.country_id"></select>
                 <span asp-validation-for="country_id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>
 
 @section Scripts {

@@ -20,32 +20,55 @@ namespace PracticaUno.Controllers
         }
 
         // GET: Countries
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.countries.ToListAsync());
+            int pageSize = 10;
+            var countries = _context.countries.Include(c => c.Regions).AsQueryable();
+            return View(await Pagination<Countries>.CreateAsync(countries, pageNumber ?? 1, pageSize));
         }
 
         // GET: Countries/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var countries = await _context.countries
+            var country = await _context.countries
+                .Include(c => c.Regions)
                 .FirstOrDefaultAsync(m => m.country_id == id);
-            if (countries == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return View(countries);
-        }
+            return View(country);
+        }       
+
+        //public async Task<IActionResult> Details(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var country = await _context.countries
+        //        .Include(c => c.Regions)
+        //        .FirstOrDefaultAsync(m => m.country_id.Equals(id));
+        //    if (country == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(country);
+        //}
+
 
         // GET: Countries/Create
         public IActionResult Create()
         {
+            ViewData["region_id"] = new SelectList(_context.regions, "region_id", "region_name");
             return View();
         }
 
@@ -62,22 +85,26 @@ namespace PracticaUno.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["region_id"] = new SelectList(_context.regions, "region_id", "region_name", countries.region_id);  
             return View(countries);
         }
 
         // GET: Countries/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var countries = await _context.countries.FindAsync(id);
+            var countries = await _context.countries
+                .Include(c => c.Regions)
+                .FirstOrDefaultAsync(m => m.country_id == id);  
             if (countries == null)
             {
                 return NotFound();
             }
+            ViewData["region_id"] = new SelectList(_context.regions, "region_id", "region_name", countries.region_id);
             return View(countries);
         }
 
@@ -86,7 +113,7 @@ namespace PracticaUno.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("country_id,country_name,region_id")] Countries countries)
+        public async Task<IActionResult> Edit(string id, [Bind("country_id,country_name,region_id")] Countries countries)
         {
             if (id != countries.country_id)
             {
@@ -113,11 +140,12 @@ namespace PracticaUno.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["region_id"] = new SelectList(_context.regions, "region_id", "region_name", countries.region_id);
             return View(countries);
         }
 
         // GET: Countries/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -125,6 +153,7 @@ namespace PracticaUno.Controllers
             }
 
             var countries = await _context.countries
+                .Include(c => c.Regions)
                 .FirstOrDefaultAsync(m => m.country_id == id);
             if (countries == null)
             {
@@ -137,7 +166,7 @@ namespace PracticaUno.Controllers
         // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var countries = await _context.countries.FindAsync(id);
             if (countries != null)
@@ -149,7 +178,7 @@ namespace PracticaUno.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CountriesExists(int id)
+        private bool CountriesExists(string id)
         {
             return _context.countries.Any(e => e.country_id == id);
         }

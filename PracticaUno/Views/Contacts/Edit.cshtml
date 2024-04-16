@@ -3,10 +3,8 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>Contacts</h4>
+<br /> 
+<h2 class="text-center"> Edit contacts</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,12 +12,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="contact_id" />
             <div class="form-group">
-                <label asp-for="First_name" class="control-label"></label>
+                <label asp-for="First_name" class="control-label">First Name</label>
                 <input asp-for="First_name" class="form-control" />
                 <span asp-validation-for="First_name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Last_name" class="control-label"></label>
+                <label asp-for="Last_name" class="control-label">Last name</label>
                 <input asp-for="Last_name" class="form-control" />
                 <span asp-validation-for="Last_name" class="text-danger"></span>
             </div>
@@ -34,7 +32,7 @@
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="customer_id" class="control-label"></label>
+                <label asp-for="customer_id" class="control-label">Customers</label>
                 <select asp-for="customer_id" class="form-control" asp-items="ViewBag.customer_id"></select>
                 <span asp-validation-for="customer_id" class="text-danger"></span>
             </div>
